@@ -2,9 +2,11 @@
 #[path = "token/token.rs"] mod token;
 
 fn main() {
-    let input = "
-let five = 5;
-let ten=10;
+    let input = 
+"let five=5;
+let ten = 10;
+let x = 5 == 5;
+let y = 7!=7;
 let add = fn(x, y) {
     x+y;
 };
