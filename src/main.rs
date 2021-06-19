@@ -8,7 +8,11 @@ let ten = 10;
 let x = 5 == 5;
 let y = 7!=7;
 let add = fn(x, y) {
-    x+y;
+    if(x>y) {
+        return x+y;
+    } else {
+        return x+y;
+    }
 };
 
 let result = add(five, ten);";

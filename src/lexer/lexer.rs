@@ -59,8 +59,9 @@ impl Lexer {
             '>' => {token_type = token::TokenType::Gt},
             _ => {
                 if is_letter(self.current_char) {
+                    literal = self.read_identifier();
                     return token::Token{
-                        literal: self.read_identifier(),
+                        literal: literal.clone(),
                         token_type: token::lookup_ident(&literal)
                     }
                 } else if is_digit(self.current_char) {
