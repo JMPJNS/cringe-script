@@ -28,7 +28,10 @@ pub enum TokenType {
     False,
     If,
     Else,
-    Return
+    Return,
+    Whitespace,
+    Newline,
+    Tab
 }
 
 pub fn lookup_ident(i: &String) -> TokenType {

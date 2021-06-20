@@ -1,4 +1,4 @@
-#[path = "../token/token.rs"] pub mod token;
+use token::{TokenType, Token};
 
 pub struct Lexer {
     pub input: String,
@@ -22,26 +22,26 @@ impl Lexer {
     }
 
     pub fn next_token(&mut self) -> token::Token {
-        self.skip_whitespace();
+        // self.skip_whitespace();
         let mut literal: String = self.current_char.into();
-        let mut token_type: token::TokenType;
+        let mut token_type: TokenType;
 
         match self.current_char {
             '=' => {
                 if self.peek_char() == '=' {
-                    token_type = token::TokenType::Eq;
+                    token_type = TokenType::Eq;
                     self.read_char();
                     literal = "==".into();
                 } else {
-                    token_type = token::TokenType::Assign;
+                    token_type = TokenType::Assign;
                 }
             },
-            ';' => {token_type = token::TokenType::Semicolon},
-            '(' => {token_type = token::TokenType::Lparen},
-            ')' => {token_type = token::TokenType::Rparen},
-            ',' => {token_type = token::TokenType::Comma},
-            '+' => {token_type = token::TokenType::Plus},
-            '-' => {token_type = token::TokenType::Minus},
+            ';' => {token_type = TokenType::Semicolon},
+            '(' => {token_type = TokenType::Lparen},
+            ')' => {token_type = TokenType::Rparen},
+            ',' => {token_type = TokenType::Comma},
+            '+' => {token_type = TokenType::Plus},
+            '-' => {token_type = TokenType::Minus},
             '!' => {
                 if self.peek_char() == '=' {
                     token_type = token::TokenType::NotEq;
@@ -51,26 +51,29 @@ impl Lexer {
                     token_type = token::TokenType::Bang;
                 }
             },
-            '*' => {token_type = token::TokenType::Asterisk},
-            '/' => {token_type = token::TokenType::Slash},
-            '{' => {token_type = token::TokenType::Lbrace},
-            '}' => {token_type = token::TokenType::Rbrace},
-            '<' => {token_type = token::TokenType::Lt},
-            '>' => {token_type = token::TokenType::Gt},
+            '*' => {token_type = TokenType::Asterisk},
+            '/' => {token_type = TokenType::Slash},
+            '{' => {token_type = TokenType::Lbrace},
+            '}' => {token_type = TokenType::Rbrace},
+            '<' => {token_type = TokenType::Lt},
+            '>' => {token_type = TokenType::Gt},
+            ' ' => {token_type = TokenType::Whitespace},
+            '\n' | '\r' => {token_type = TokenType::Newline},
+            '\t' => {token_type = TokenType::Tab},
             _ => {
                 if is_letter(self.current_char) {
                     literal = self.read_identifier();
-                    return token::Token{
+                    return Token{
                         literal: literal.clone(),
                         token_type: token::lookup_ident(&literal)
                     }
                 } else if is_digit(self.current_char) {
-                    return token::Token{
+                    return Token{
                         literal: self.read_number(),
-                        token_type: token::TokenType::Int
+                        token_type: TokenType::Int
                     }
                 } else {
-                    token_type = token::TokenType::Illegal;
+                    token_type = TokenType::Illegal;
                 }
             }
         }

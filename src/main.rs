@@ -1,21 +1,22 @@
-#[path = "lexer/lexer.rs"] mod lexer;
-#[path = "token/token.rs"] mod token;
+use token::{TokenType, Token};
 
 fn main() {
-    let input = 
-"let five=5;
-let ten = 10;
-let x = 5 == 5;
-let y = 7!=7;
-let add = fn(x, y) {
-    if(x>y) {
-        return x+y;
-    } else {
-        return x+y;
-    }
-};
+//     let input = 
+// "let five=5;
+// let ten = 10;
+// let x = 5 == 5;
+// let y = 7!=7;
+// let add = fn(x, y) {
+//     if(x>y) {
+//         return x+y;
+//     } else {
+//         return x+y;
+//     }
+// };
 
-let result = add(five, ten);";
+// let result = add(five, ten);";
+
+    let input = "let five = 10;";
 
     println!("starting\n\n\n\n");
 
@@ -27,7 +28,7 @@ let result = add(five, ten);";
 
     loop {
         match x.token_type {
-            lexer::token::TokenType::Eof => {
+            TokenType::Eof => {
                 println!("{:?}", x);
                 break
             },
@@ -43,5 +44,5 @@ let result = add(five, ten);";
         }
     }
 
-    println!("{}", counter)
+    println!("{} Tokens", counter)
 }
