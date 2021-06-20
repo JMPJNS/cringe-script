@@ -1,4 +1,4 @@
-use token::{TokenType, Token};
+use crate::token::*;
 
 pub struct Lexer {
     pub input: String,
@@ -21,7 +21,7 @@ impl Lexer {
         return l;
     }
 
-    pub fn next_token(&mut self) -> token::Token {
+    pub fn next_token(&mut self) -> Token {
         // self.skip_whitespace();
         let mut literal: String = self.current_char.into();
         let mut token_type: TokenType;
@@ -44,11 +44,11 @@ impl Lexer {
             '-' => {token_type = TokenType::Minus},
             '!' => {
                 if self.peek_char() == '=' {
-                    token_type = token::TokenType::NotEq;
+                    token_type = TokenType::NotEq;
                     self.read_char();
                     literal = "!=".into();
                 } else {
-                    token_type = token::TokenType::Bang;
+                    token_type = TokenType::Bang;
                 }
             },
             '*' => {token_type = TokenType::Asterisk},
@@ -65,7 +65,7 @@ impl Lexer {
                     literal = self.read_identifier();
                     return Token{
                         literal: literal.clone(),
-                        token_type: token::lookup_ident(&literal)
+                        token_type: lookup_ident(&literal)
                     }
                 } else if is_digit(self.current_char) {
                     return Token{
@@ -79,12 +79,12 @@ impl Lexer {
         }
 
         if self.current_char == 0.into() {
-            token_type = token::TokenType::Eof;
+            token_type = TokenType::Eof;
         }
 
         self.read_char();
 
-        token::Token {
+        Token {
             token_type,
             literal
         }

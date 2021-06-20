@@ -1,3 +1,7 @@
+mod token;
+mod lexer;
+mod parser;
+mod ast;
 use token::{TokenType, Token};
 
 fn main() {

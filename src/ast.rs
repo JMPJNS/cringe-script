@@ -1,5 +1,4 @@
-#[path = "./token.rs"] mod token;
-use token::{Token, TokenType};
+use crate::token::{Token, TokenType};
 use core::fmt::Debug;
 
 // Types
