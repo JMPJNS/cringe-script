@@ -12,7 +12,7 @@ impl Debug for dyn Node {
     }
 }
 
-trait Statement: Node {
+pub trait Statement: Node {
     fn statement_node(&self);
 }
 impl Debug for dyn Statement {
@@ -21,7 +21,7 @@ impl Debug for dyn Statement {
     }
 }
 
-trait Expression: Node {
+pub trait Expression: Node {
     fn expression_node(&self);
 }
 impl Debug for dyn Expression {
@@ -31,31 +31,39 @@ impl Debug for dyn Expression {
 }
 
 #[derive(Debug)]
-struct Program {
-    statements: Vec<Box<dyn Statement>>
+pub struct Program {
+    pub statements: Vec<Box<dyn Statement>>
+}
+impl Program {
+    pub fn new() -> Self {
+        let v: Vec<Box<dyn Statement>> = Vec::new();
+        Program {
+            statements: v
+        }
+    }
 }
 
 #[derive(Debug)]
-struct Identifier {
-    token: Token,
-    value: String
+pub struct Identifier {
+    pub token: Token,
+    pub value: String
 }
 
 /// Let Statement
 
 #[derive(Debug)]
-struct LetStatement<'a> {
-    token: Token,
-    name: &'a Identifier,
-    value: dyn Expression
+pub struct LetStatement {
+    pub token: Token,
+    pub name: Option<Identifier>,
+    pub value: Option<Box<dyn Expression>>
 }
 
-impl<'a> Node for LetStatement<'a> {
+impl Node for LetStatement {
     fn token_literal(&self) -> String {
         self.token.literal.clone()
     }
 }
 
-impl<'a> Statement for LetStatement<'a> {
+impl Statement for LetStatement {
     fn statement_node(&self) {}
 }

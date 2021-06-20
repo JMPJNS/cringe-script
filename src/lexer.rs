@@ -22,7 +22,7 @@ impl Lexer {
     }
 
     pub fn next_token(&mut self) -> Token {
-        // self.skip_whitespace();
+        self.skip_whitespace();
         let mut literal: String = self.current_char.into();
         let mut token_type: TokenType;
 

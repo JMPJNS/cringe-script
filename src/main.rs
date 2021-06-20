@@ -22,31 +22,9 @@ fn main() {
 
     let input = "let five = 10;";
 
-    println!("starting\n\n\n\n");
+    println!("starting\n\n");
 
     let mut lexer = lexer::Lexer::new(input.to_string());
-
-    let mut x = lexer.next_token();
-
-    let mut counter = 0;
-
-    loop {
-        match x.token_type {
-            TokenType::Eof => {
-                println!("{:?}", x);
-                break
-            },
-            _ => {
-                println!("{:?}", x);
-                x = lexer.next_token();
-                counter += 1;
-                if counter >= 1000 {
-                    lexer.next_token();
-                    break
-                };
-            }
-        }
-    }
-
-    println!("{} Tokens", counter)
+    let mut parser = parser::Parser::new(lexer);
+    parser.parse_program();
 }
